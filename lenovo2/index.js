@@ -1,130 +1,134 @@
 window.onload = function () {
-    var pic=document.querySelector('.pic')
-    // axios.get("http://112.74.73.147:39010/getImg")
-    //     .then(function(response){
-    //     console.log(response);
-    //     pic.src=response.data
-    //     },function(err){
-    //     console.log(err);
-    //     })
+    //轮播图
     {
 
-        var focus = document.querySelector('.focus');
-        var ol = document.querySelector('.circle');
-        var ul = focus.querySelector('ul');
+        var pic = document.querySelector('.pic')
+        axios.get("http://112.74.73.147:39010/getImg")
+            .then(function (response) {
+                console.log(response);
+                pic.src = response.data
+            }, function (err) {
+                console.log(err);
+            })
+        {
 
-        for (var i = 0; i < ul.children.length; i++) {
-            var li = document.createElement("li");
-            ol.appendChild(li)
-            // 记录小圆圈的索引号
-            li.setAttribute('index', i);//设定一个索引数  
-            ol.children[0].className="circle_active"
-            li.addEventListener('mouseenter', function () {
+            var focus = document.querySelector('.focus');
+            var ol = document.querySelector('.circle');
+            var ul = focus.querySelector('ul');
 
-                // 排他思想
+            for (var i = 0; i < ul.children.length; i++) {
+                var li = document.createElement("li");
+                ol.appendChild(li)
+                // 记录小圆圈的索引号
+                li.setAttribute('index', i);//设定一个索引数  
+                ol.children[0].className = "circle_active"
+                li.addEventListener('mouseenter', function () {
+
+                    // 排他思想
+                    for (var i = 0; i < ol.children.length; i++) {
+                        ol.children[i].className = '';
+
+                    }
+
+                    this.className = 'circle_active';
+
+
+
+                    var index = this.getAttribute('index');
+                    console.log(index);
+                    //获取此时点击小圆圈的索引数
+                    num = index;//轮播图位置
+                    circle = index;
+                    var focusWidth = focus.offsetWidth;//获取图片宽度
+
+
+                    animate(ul, -index * focusWidth);
+
+
+                })
+            }
+
+            //克隆第一张图片
+            var first = ul.children[0].cloneNode(true);
+            ul.appendChild(first);
+            var focusWidth = focus.offsetWidth;
+            var num = 0;
+            var circle = 0;
+            // 左右按键
+            var btnr = document.querySelector('.next');
+            btnr.addEventListener('click', function () {
+
+
+                if (num == ul.children.length - 1) {
+                    ul.style.left = 0;
+                    num = 0;
+                }
+                num++;
+                animate(ul, -num * focusWidth);
+
+
+                circle++;
+                if (circle == ol.children.length) {
+                    circle = 0;
+                }
+                circleChange();
+
+
+            })
+            var btnl = document.querySelector('.prev');
+            btnl.addEventListener('click', function () {
+                if (num == 0) {
+                    num = ul.children.length - 1;
+                    ul.style.left = -num * focusWidth + 'px';
+                }
+                num--;
+                animate(ul, -num * focusWidth);
+                circle--;
+                /*  if(circle<0){
+                     circle=ol.children.length-1;
+                 } */
+                circle = circle < 0 ? ol.children.length - 1 : circle;
+                circleChange();
+
+
+            });
+            //点击bug处理
+            function circleChange() {
                 for (var i = 0; i < ol.children.length; i++) {
                     ol.children[i].className = '';
 
                 }
 
-                this.className = 'circle_active';
+                ol.children[circle].className = 'circle_active';
 
 
-
-                var index = this.getAttribute('index');
-                console.log(index);
-                //获取此时点击小圆圈的索引数
-                num = index;//轮播图位置
-                circle = index;
-                var focusWidth = focus.offsetWidth;//获取图片宽度
+            }
+            //自动轮播效果
+            var timer = setInterval(function () {
 
 
-                animate(ul, -index * focusWidth);
-         
+                if (num == 8) {
+                    ul.style.left = 0;
+                    num = 0;
+                }
+                num++;
+                circle++;
+                for (var i = 0; i < ol.children.length; i++) {
+                    ol.children[i].className = '';
+                }
 
-            })
+                if (circle == 8) {
+                    circle = 0;
+                    ol.children[0].className = '';
+
+                }
+                ol.children[circle].className = 'circle_active';
+
+
+                animate(ul, -num * focusWidth);
+
+            }, 4000)
         }
-  
-        //克隆第一张图片
-        var first = ul.children[0].cloneNode(true);
-        ul.appendChild(first);
-        var focusWidth = focus.offsetWidth;
-        var num = 0;
-        var circle = 0;
-        // 左右按键
-        var btnr = document.querySelector('.next');
-        btnr.addEventListener('click', function () {
-
-
-            if (num == ul.children.length - 1) {
-                ul.style.left = 0;
-                num = 0;
-            }
-            num++;
-            animate(ul, -num * focusWidth);
-
-
-            circle++;
-            if (circle == ol.children.length) {
-                circle = 0;
-            }
-            circleChange();
-
-
-        })
-        var btnl = document.querySelector('.prev');
-        btnl.addEventListener('click', function () {
-            if (num == 0) {
-                num = ul.children.length - 1;
-                ul.style.left = -num * focusWidth + 'px';
-            }
-            num--;
-            animate(ul, -num * focusWidth);
-            circle--;
-            /*  if(circle<0){
-                 circle=ol.children.length-1;
-             } */
-            circle = circle < 0 ? ol.children.length - 1 : circle;
-            circleChange();
-
-
-        });
-        //点击bug处理
-        function circleChange() {
-            for (var i = 0; i < ol.children.length; i++) {
-                ol.children[i].className = '';
-
-            }
-
-            ol.children[circle].className = 'circle_active';
-
-
-        }
-        //自动轮播效果
-        var timer = setInterval(function () {
-
-
-            if (num == 8) {
-                ul.style.left = 0;
-                num = 0;
-            }
-            num++;
-            circle++;
-            for (var i = 0; i < ol.children.length; i++) {
-                ol.children[i].className = '';
-            }
-
-            if (circle == 8) {
-                circle = 0;
-                ol.children[0].className = '';
-
-            }
-            ol.children[circle].className = 'circle_active';
-
-
-            animate(ul, -num * focusWidth);
-
-        }, 4000)
     }
     // 新闻中心
     {
@@ -176,15 +180,6 @@ window.onload = function () {
             list2.style.backgroundColor = "#f4f4f4"
             this.style.backgroundColor = "#fff"
         })
-        // newsPic.addEventListener("mousedown",function(e){
-        //     var x = e.offsetX
-        //     console.log(x);
-        //     newsPic.addEventListener("drag",function(e){
-        //         var newX=e.offsetX
-        //         console.log(newX);
-        //        animate(newsUl,-x-newX)
-        //     })
-        // })
 
         var oUl = document.getElementById('drag');
         var aLi = oUl.getElementsByTagName('li');
@@ -306,26 +301,6 @@ window.onload = function () {
                 boxLists[square].classList.add("active_li")
             }
 
-            // if (square == 3) {
-            //     square = -1
-            //      eUl.style.left = 0;
-            //      eNum=0}
-
-            // eNum++;   
-            // if (square == 0) {
-            //     boxLists[3].classList.remove("active_li")
-            //     boxLists[0].classList.add("active_li")
-            // }
-            // else if (square != 0) {
-            //     boxLists[square - 1].classList.remove("active_li")
-            //     boxLists[square].classList.add("active_li")
-            // }
-
-
-
-
-
-
         }
         function examplePrev() {
 
@@ -388,9 +363,6 @@ window.onload = function () {
             getPrev()
         })
 
-
-
-
         function getPrev() {
             let imgTurn = imgArr[0]
             imgArr.shift()
@@ -446,196 +418,178 @@ window.onload = function () {
         }
 
     }
-
     // 热门推荐
-    // let imgArr2 = new Array()
-    var hot_ul = document.querySelector(".bgimg_hot")
-    // for (let i = 1; i <= 9; i++) {
-    //     var hot_li = document.createElement("li")
-    //     var hot_img = document.createElement("img")
-    //     hot_img.src = "./assets/hot/" + i + ".jpg"
-    //     hot_li.appendChild(hot_img)
-    //     hot_ul.appendChild(hot_li)
+    {
+        var hot_ul = document.querySelector(".bgimg_hot")
 
-    //     // imgArr2.push(hot_li)
-    //     // imgArr2[imgArr2.length - 1].style.left = "0px"
-    // }
+        var hNum = 0
+        var hfocusWidth = document.querySelector('.hot_li').offsetWidth
+        {
+            var hNext = document.querySelector(".hotNext")
+            var hPrev = document.querySelector('.hotPrev')
+            hNext.addEventListener("click", function () {
+                gethotNext()
+            })
+            hPrev.addEventListener("click", function () {
+                gethotPrev()
+            })
 
-    var hNum = 0
-    var hfocusWidth = document.querySelector('.hot_li').offsetWidth
-    {// let len2 = imgArr2.length - 1
-        // imgArr2[len2 - 2].style.left = "0px"
-        // imgArr2[len2 - 1].style.zIndex = 100
-        // imgArr2[len2 - 1].style.left = "175px"
-        // imgArr2[len2 - 1].style.transform = "scale(1.3)"
-        // imgArr2[len2].style.left = "350px"
-        var hNext = document.querySelector(".hotNext")
-        var hPrev = document.querySelector('.hotPrev')
-        hNext.addEventListener("click", function () {
-            gethotNext()
-        })
-        hPrev.addEventListener("click", function () {
-            gethotPrev()
-        })
+        }
+        var list_hot = document.querySelector(".list_hot")
+        var listLi = list_hot.querySelectorAll("li")
+        var hot_li = hot_ul.querySelectorAll("li")
+        hot_li[1].style.transform = "scale(1.3)"
+        listLi[0].classList.add("activeList")
+        var hFirst = hot_ul.children[1].cloneNode(true)
+        hot_ul.appendChild(hFirst)
+        hFirst.style.transform = "scale(1)"
+        hFirst.classList.add("activeHot")
 
-    }
-    var list_hot = document.querySelector(".list_hot")
-    var listLi = list_hot.querySelectorAll("li")
-    var hot_li = hot_ul.querySelectorAll("li")
-    hot_li[1].style.transform = "scale(1.3)"
-    listLi[0].classList.add("activeList")
-    var hFirst = hot_ul.children[1].cloneNode(true)
-    hot_ul.appendChild(hFirst)
-    hFirst.style.transform = "scale(1)"
-    hFirst.classList.add("activeHot")
+        hFirst.style.zIndex = "2"
+        for (var j = 0; j < 9; j++) {
 
-    hFirst.style.zIndex = "2"
-    for (var j = 0; j < 9; j++) {
+            listLi[j].setAttribute("index", j)
+            listLi[j].addEventListener("mouseenter", function () {
+                for (var i = 0; i < 9; i++) {
+                    listLi[i].style.color = ""
+                    listLi[i].classList.remove("activeList")
+                }
+                this.style.color = "#e1140a"
+                this.classList.add("activeList")
+                var listNum = parseInt(this.getAttribute("index"))
 
-        listLi[j].setAttribute("index", j)
-        listLi[j].addEventListener("mouseenter", function () {
+                console.log(listNum)
+                hNum = listNum
+                if (listNum == 8) {
+                    hot_li[listNum].style.transform = "scale(1)"
+                    hot_li[listNum].style.zIndex = "2"
+                    hot_li[listNum].classList.add("activeHot")
+                    hot_li[listNum + 1].style.transform = "scale(1.3)"
+                    hot_li[listNum + 1].style.zIndex = "100"
+                    hot_li[listNum + 1].classList.remove("activeHot")
+                }
+                else {
+                    hot_li[listNum].style.transform = "scale(1)"
+                    hot_li[listNum].style.zIndex = "2"
+                    hot_li[listNum].classList.add("activeHot")
+                    hot_li[listNum + 1].style.transform = "scale(1.3)"
+                    hot_li[listNum + 1].classList.remove("activeHot")
+                    hot_li[listNum + 1].style.zIndex = "100"
+                    hot_li[listNum + 2].style.transform = "scale(1)"
+
+                    hot_li[listNum + 2].classList.add("activeHot")
+                    hot_li[listNum + 2].style.zIndex = "2"
+                }
+                animate(hot_ul, -listNum * 400)
+            })
+                ;
+        }
+
+        function gethotNext() {
+            hot_li[9].style.transform = "scale(1)"
+            hot_li[9].style.zIndex = "2"
+            hot_li[9].classList.add("activeHot")
+            hNum++;
+            console.log(hNum);
+            if (hNum < 8)
+                hot_li[hNum + 2].classList.add("activeHot")
+            if (hNum == 9) {
+                hNum = 0
+                hot_ul.style.left = 0
+
+            }
             for (var i = 0; i < 9; i++) {
                 listLi[i].style.color = ""
                 listLi[i].classList.remove("activeList")
             }
-            this.style.color = "#e1140a"
-            this.classList.add("activeList")
-            var listNum = parseInt(this.getAttribute("index"))
+            listLi[hNum].style.color = "#e1140a"
+            listLi[hNum].classList.add("activeList")
+            hot_li[hNum].style.transform = "scale(1)"
+            hot_li[hNum].style.zIndex = "2"
+            hot_li[hNum].classList.add("activeHot")
+            hot_li[hNum + 1].style.transform = "scale(1.3)"
+            hot_li[hNum + 1].style.zIndex = "100"
+            hot_li[hNum + 1].classList.remove("activeHot")
 
-            console.log(listNum)
-            hNum = listNum
-            //  if(listNum==7){
-            //      hot_li[listNum+2].style.transform="scale(1.4)"
-            //      hot_li[listNum+1].style.transform="scale(1)"
-            //  }
-            if (listNum == 8) {
-                hot_li[listNum].style.transform = "scale(1)"
-                hot_li[listNum].style.zIndex = "2"
-                hot_li[listNum].classList.add("activeHot")
-                hot_li[listNum + 1].style.transform = "scale(1.3)"
-                hot_li[listNum + 1].style.zIndex = "100"
-                hot_li[listNum + 1].classList.remove("activeHot")
+
+            animate(hot_ul, -hNum * 400);
+        }
+
+        function gethotPrev() {
+            hNum--;
+
+            if (hNum < 0) {
+                hot_ul.style.left = - 3200 + 'px';
+                hot_li[9].style.transform = "scale(1.3)"
+                hot_li[9].style.zIndex = "100"
+                hot_li[9].classList.remove("activeHot")
+                hNum = 8;
+                hot_li[1].style.transform = "scale(1)"
+                hot_li[8].classList.add("activeHot")
+            }
+            if (hNum == 8) {
+                hot_li[hNum + 1].style.transform = "scale(1.3)"
+                hot_li[hNum + 1].style.zIndex = "100"
+                hot_li[hNum + 1].classList.remove("activeHot")
             }
             else {
-                hot_li[listNum].style.transform = "scale(1)"
-                hot_li[listNum].style.zIndex = "2"
-                hot_li[listNum].classList.add("activeHot")
-                hot_li[listNum + 1].style.transform = "scale(1.3)"
-                hot_li[listNum + 1].classList.remove("activeHot")
-                hot_li[listNum + 1].style.zIndex = "100"
-                hot_li[listNum + 2].style.transform = "scale(1)"
+                hot_li[hNum].classList.add("activeHot")
+                hot_li[hNum + 2].style.transform = "scale(1)"
+                hot_li[hNum + 1].style.transform = "scale(1.3)"
+                hot_li[hNum + 2].style.zIndex = "2"
+                hot_li[hNum + 2].classList.add("activeHot")
+                hot_li[hNum + 1].style.zIndex = "100"
+                hot_li[hNum + 1].classList.remove("activeHot")
+            }
+            for (var i = 0; i < 9; i++) {
+                listLi[i].style.color = ""
+                listLi[i].classList.remove("activeList")
+            }
+            listLi[hNum].style.color = "#e1140a"
+            listLi[hNum].classList.add("activeList")
+            animate(hot_ul, -hNum * 400)
+        }
+    }
+    { //底部JavaScript
+        var weibo = document.querySelector(".weibo")
+        var wechat = document.querySelector('.wechat')
+        var follow = document.querySelector('.follow')
+        weibo.addEventListener("mouseenter", function () {
+            this.style.transform = "rotate(360deg)"
 
-                hot_li[listNum + 2].classList.add("activeHot")
-                hot_li[listNum + 2].style.zIndex = "2"
+        })
+        weibo.addEventListener("mouseleave", function () {
+            this.style.transform = "rotate(-360deg)"
+        })
+        wechat.addEventListener("mouseenter", function () {
+            this.style.transform = "rotate(360deg)"
+            follow.style.height = "160px"
+
+        })
+        wechat.addEventListener("mouseleave", function () {
+            this.style.transform = "rotate(-360deg)"
+            follow.style.height = "0"
+        })
+        //  background-position: 1px 515px;
+        var flag = 0;
+        var country = document.querySelector('.country')
+        var countryList = document.querySelector('.countryList')
+        country.addEventListener("click", function () {
+
+            if (flag == 0) {
+                countryList.style.display = "block"
+                flag = 1
+            }
+            else {
+                countryList.style.display = "none"
+                flag = 0
             }
 
 
-            animate(hot_ul, -listNum * 400)
+            countryList.addEventListener("mouseleave", function () {
+                countryList.style.display = "none"
+                flag = 0
+            })
         })
-            ;
     }
-
-    function gethotNext() {
-        hot_li[9].style.transform = "scale(1)"
-        hot_li[9].style.zIndex = "2"
-        hot_li[9].classList.add("activeHot")
-
-        hNum++;
-        if (hNum < 9)
-            hot_li[hNum + 2].classList.add("activeHot")
-        if (hNum == 9) {
-            hNum = 0
-            hot_ul.style.left = 0
-
-        }
-        for (var i = 0; i < 9; i++) {
-            listLi[i].style.color = ""
-        }
-        listLi[hNum].style.color = "#e1140a"
-        hot_li[hNum].style.transform = "scale(1)"
-        hot_li[hNum].style.zIndex = "2"
-        hot_li[hNum].classList.add("activeHot")
-        hot_li[hNum + 1].style.transform = "scale(1.3)"
-        hot_li[hNum + 1].style.zIndex = "100"
-        hot_li[hNum + 1].classList.remove("activeHot")
-
-
-        animate(hot_ul, -hNum * 400);
-    }
-
-    function gethotPrev() {
-        hNum--;
-
-        if (hNum < 0) {
-            hot_ul.style.left = - 3200 + 'px';
-            hot_li[9].style.transform = "scale(1.3)"
-            hot_li[9].style.zIndex = "100"
-            hot_li[9].classList.remove("activeHot")
-            hNum = 8;
-            hot_li[1].style.transform = "scale(1)"
-            hot_li[8].classList.add("activeHot")
-        }
-        if (hNum == 8) {
-            hot_li[hNum + 1].style.transform = "scale(1.3)"
-            hot_li[hNum + 1].style.zIndex = "100"
-            hot_li[hNum + 1].classList.remove("activeHot")
-        }
-        else {
-            hot_li[hNum].classList.add("activeHot")
-            hot_li[hNum + 2].style.transform = "scale(1)"
-            hot_li[hNum + 1].style.transform = "scale(1.3)"
-            hot_li[hNum + 2].style.zIndex = "2"
-            hot_li[hNum + 2].classList.add("activeHot")
-            hot_li[hNum + 1].style.zIndex = "100"
-            hot_li[hNum + 1].classList.remove("activeHot")
-        }
-        for (var i = 0; i < 9; i++) {
-            listLi[i].style.color = ""
-        }
-        listLi[hNum].style.color = "#e1140a"
-        animate(hot_ul, -hNum * 400)
-    }
-
-    //底部JavaScript
-    var weibo = document.querySelector(".weibo")
-    var wechat = document.querySelector('.wechat')
-    var follow = document.querySelector('.follow')
-    weibo.addEventListener("mouseenter", function () {
-        this.style.transform = "rotate(360deg)"
-
-    })
-    weibo.addEventListener("mouseleave", function () {
-        this.style.transform = "rotate(-360deg)"
-    })
-    wechat.addEventListener("mouseenter", function () {
-        this.style.transform = "rotate(360deg)"
-        follow.style.height = "160px"
-
-    })
-    wechat.addEventListener("mouseleave", function () {
-        this.style.transform = "rotate(-360deg)"
-        follow.style.height = "0"
-    })
-    //  background-position: 1px 515px;
-            var flag = 0;
-    var country = document.querySelector('.country')
-    var countryList = document.querySelector('.countryList')
-    country.addEventListener("click", function () {
-
-        if (flag == 0) {
-            countryList.style.display = "block"
-            flag = 1
-        }
-     else{
-             countryList.style.display = "none"
-             flag=0
-     }
-        
-        
-        countryList.addEventListener("mouseleave", function () {
-            countryList.style.display = "none"
-            flag=0
-        })
-    })
 }
-
