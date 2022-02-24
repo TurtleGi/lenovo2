@@ -18,6 +18,7 @@ margin-bottom: -35px;
   .prev,.next,.cPrev,.cNext,.ePrev,.eNext{
       position: absolute;
       z-index: 100;
+      cursor: pointer;
   }
   .prev,.next,.cPrev,.cNext{
           top:30%; 
@@ -60,6 +61,7 @@ margin-bottom: -35px;
       width: 500px;
       height: 30px;
       line-height: 30px;
+      display: flex;
       
   }   
 .circle .circle_active{
@@ -73,11 +75,9 @@ margin-bottom: -35px;
      
   } 
   .circle  li{
- 
-      float: left;
-    
+ cursor: pointer;
       width: 3px;
-      height: 10px;
+      height: 11px;
       margin:0 15px;
   
       background-color: #fff;
@@ -162,10 +162,11 @@ right: 8px;
     display: flex;
 }
 .focus_news{
-background-color: #ff0000;
+    background-color: #ff0000;
     width: 100%;
     height: 444px;
     overflow: hidden;
+    cursor: pointer;
 }
 
   .focus_news .bgimg_news {
@@ -198,12 +199,12 @@ background-color: #ff0000;
   .banner_news .newsCircle .activeCircle{
       width: 35px;
       height: 10px;
-border-radius: 10px;
-background-color: #fff;
-opacity: 1;
+      border-radius: 10px;
+      background-color: #fff;
+      opacity: 1;
   }
 .list_news{
-   margin-left: 10px;
+    margin-left: 10px;
     width: 440px;
     height: 447px;
  
@@ -211,6 +212,7 @@ opacity: 1;
 }
 
 .list_news li{
+    cursor: pointer;
     position: relative;
     height: 145px;
     border-bottom: 3px solid #fff; 
@@ -326,7 +328,7 @@ left:0;
 }
 .banner_example{
     width:100%;
-   height: 100%;
+    height: 100%;
     overflow: hidden;
 
   }
@@ -347,19 +349,16 @@ left:0;
     margin: 0 auto;
 }
   .exampleBox{
-      
-position: absolute;
-top: -80px;
-right: 0;
-width: 830px;
-height: 140px;
-
-
- display: flex; 
+    position: absolute;
+    top: -80px;
+    right: 0;
+    width: 830px;
+    height: 140px;
+    display: flex; 
 
   }
   .exampleBox li{
-
+      cursor: pointer;
       width: 200px;
       height: 100px;
       padding: 20px 30px;
@@ -409,7 +408,7 @@ height: 140px;
 .banner_hot{
    
     height: 420px;
-position: relative;
+    position: relative;
     display: flex;
   
 }
@@ -422,20 +421,20 @@ height: 25px;
 border:1px solid #dee2e7 ;
 }
 .hotPrev{
+    cursor: pointer;
     position: relative;
-
     font-family: 'icomoon';
     content: '\f104';
     color: #dee2e7;
-background-color: #fff;
+    background-color: #fff;
 }
 .hotNext{
+    cursor: pointer;
     position: relative;
-
     font-family: 'icomoon';
     content: '\f105';
     color: #dee2e7;
-background-color: #fff;
+    background-color: #fff;
 }
 .hotPrev:hover,.hotNext:hover{
     background-color: #ef1e0b;
@@ -450,7 +449,7 @@ background-color: #fff;
     flex-direction: column;
 }
 .list_hot li{
-    
+    cursor: pointer;
     height: 40px;
     line-height: 40px;
     font-size: 16px;
@@ -469,23 +468,6 @@ background-color: #fff;
 
 }
 
-/* .bgimg_hot{
-    display: flex;
-    position: absolute;
-    top:20px;
-
-    height: 200px;
-
-
-}
-.bgimg_hot li{
-    width: 350px;
-   
-    position: absolute;
-    left: 0;
-
-    transition-duration: 0.4s;
-} */
 .focus_hot {
 position: relative;
     width: 800px;
@@ -498,10 +480,12 @@ position: relative;
     margin-top: 50px;
     width: 1000%;
     display: flex;
+  
  
    }
    .bgimg_hot li{
        position: relative;
+       transition-duration: 0.4s;
    }
    .bgimg_hot .activeHot::before{
       position: absolute;
@@ -534,13 +518,7 @@ position: relative;
       color: #fff;
       font-size: 10px;
   }
-/* .Center{
-     transform: scale(1.4);
- } */
-  /* .focus_hot ul li {
-    width:10%;
 
-  } */
   .focus_hot img{
       width: 400px;
   }
