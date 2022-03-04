@@ -1,4 +1,88 @@
 window.onload = function () {
+      var navLeft = document.querySelector(".nav_left")
+    var navProject=navLeft.querySelectorAll(".nl-li")
+    var headDetail1 = navProject[0].querySelector(".headDetail")
+    var headDetail2 = navProject[1].querySelector(".headDetail")
+    var cover=document.querySelector("#cover")
+    var headDnav1=navProject[0].querySelector(".headDnav")
+    var headDnav2=navProject[1].querySelector(".headDnav")
+    var headList1=headDnav1.querySelectorAll("li")
+    var headList2=headDnav2.querySelectorAll("li")
+    var headBanner1=navProject[0].querySelectorAll(".headBanner")
+    var headBanner2=navProject[1].querySelectorAll(".headBanner")
+    navProject[0].addEventListener("mouseenter", function () {
+        headDetail1.style.display = "block"
+        cover.style.display="block"
+    })
+    headList1[0].addEventListener("mouseenter",function(){
+        for(var i=0;i<headBanner1.length;i++){
+        headBanner1[i].style.display="none"
+   
+    }
+    for(var i=0;i<headList1.length;i++){
+        headList1[i].classList.remove("headNavActive")
+    }
+    headBanner1[0].style.display="flex"
+    headList1[0].classList.add("headNavActive")
+    })
+     headList1[1].addEventListener("mouseenter",function(){
+         for(var i=0;i<headBanner1.length;i++){
+         headBanner1[i].style.display="none"
+
+     }
+     for(var i=0;i<headList1.length;i++){
+        headList1[i].classList.remove("headNavActive")
+    }
+     headBanner1[1].style.display="flex"
+     headList1[1].classList.add("headNavActive")
+     })
+    navProject[0].addEventListener("mouseleave", function () {
+        headDetail1.style.display="none"
+        cover.style.display="none"
+     
+    })
+
+
+
+
+
+    navProject[1].addEventListener("mouseenter", function () {
+        headDetail2.style.display="block"
+        
+        cover.style.display="block"
+    })
+    
+    headList2[0].addEventListener("mouseenter",function(){
+        for(var i=0;i<headBanner2.length;i++){
+        headBanner2[i].style.display="none"
+
+    }
+    for(var i=0;i<headList2.length;i++){
+        headList2[i].classList.remove("headNavActive")
+    }
+    headBanner2[0].style.display="flex"
+    headList2[0].classList.add("headNavActive")
+    })
+     headList2[1].addEventListener("mouseenter",function(){
+         for(var i=0;i<headBanner2.length;i++){
+         headBanner2[i].style.display="none"
+
+     }
+     for(var i=0;i<headList2.length;i++){
+        headList2[i].classList.remove("headNavActive")
+    }
+     headBanner2[1].style.display="flex"
+     headList2[1].classList.add("headNavActive")
+     })
+    navProject[1].addEventListener("mouseleave", function () {
+         headDetail2.style.display = "none" 
+        cover.style.display="none"
+     
+    })
+ 
+   
+
+    
     //轮播图
     {
 
