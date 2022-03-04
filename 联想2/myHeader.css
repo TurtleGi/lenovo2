@@ -1,14 +1,81 @@
+.head{
+    width: 100%;
+    height: 60px;
+}
 .myHeader{
-    display: fixed;
-    
+    position: fixed;
     width: 100%;
     min-width: 1200px;
     height: 60px;
     background-color: #fff;
     line-height: 60px;
-  
+    z-index: 11111;
+    top: 0;
+}
+.headDetail{
+   display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
+    background-color: #ffffff;
+   }
+   .headDetail li a{
+    color: #000000;
+}
+.headDnav{
+    height: 80px;
+    line-height: 80px;
+    background-color: #f4f4f4;
+}
+.headDnav ul{
+    display: flex;
+}
+.headDnav li{
+    margin: 0 30px;
+}
+.headDetail .headNavActive{
+    height: 78px;
+    line-height: 80px;
+    border-bottom: 2px solid #e12726;
+}
+.headBanner{
+display: flex;
+transition-duration: 0.4s;
+}
+.headBanner ul li:first-child{
+    font-weight: 700;
+    font-size: 16px;
+}
+.headBanner ul .headTitle a:hover{
+ color: #e1140a;
+}
+.headBanner ul li{
+    display: flex;
+    flex-direction: column;
+    height: 35px;
+    font-size: 13px;
 }
 
+.headFirst ul{
+    margin: 0 45px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+.headSecond{
+    display: none;
+}
+.headSecond ul{
+    margin: 0 130px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+.head3 ul{
+    margin: 0 100px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
 .logo{
     float: left;
     width: 180px;
@@ -20,17 +87,17 @@
   float: left;
 
 }
-.nav_left li,.nav_right li {
+.nav_left .nl-li,.nav_right li {
    
-  float: left;
+    float: left;
     height: 60px;
     margin:0 10px;
 }
-.nav_left li:hover{
+.nav_left .nl-li:hover{
     height: 55px;
     border-bottom: 5px solid #e12726;
 }
-.nav_left li a{
+.nav_left .nl-li a{
     color: #252525;
 }
 .nav_right{
